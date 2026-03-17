@@ -32,7 +32,7 @@
     }
 
     .metric {
-      font-size: 22px;
+      font-size: 20px;
       margin: 10px 0;
     }
 
@@ -43,6 +43,13 @@
     a {
       color: #38bdf8;
       text-decoration: none;
+      font-weight: bold;
+    }
+
+    .status {
+      margin-top: 10px;
+      font-size: 14px;
+      opacity: 0.8;
     }
   </style>
 </head>
@@ -53,12 +60,13 @@
     <h1>🚀 Core Web Vitals - Nakamura Mudanças</h1>
 
     <div class="card">
-      <h2>Status do Site</h2>
-      <p>Monitoramento automático via Lighthouse + GitHub</p>
+      <h2>Status do Sistema</h2>
+      <div id="status" class="metric warn">Carregando dados...</div>
+      <div class="status">Monitoramento automático via Lighthouse + GitHub</div>
     </div>
 
     <div class="card">
-      <h2>Métricas (Referência)</h2>
+      <h2>Métricas (Referência Google)</h2>
 
       <div class="metric good">✔ LCP: ideal até 2.5s</div>
       <div class="metric good">✔ CLS: ideal até 0.1</div>
@@ -66,14 +74,14 @@
     </div>
 
     <div class="card">
-      <h2>Relatórios</h2>
+      <h2>Relatório Atual</h2>
       <p>
-        <a href="#">Ver último relatório Lighthouse</a>
+        <a id="reportLink" href="#" target="_blank">Carregando relatório...</a>
       </p>
     </div>
 
     <div class="card">
-      <h2>Ferramentas</h2>
+      <h2>Ferramentas Google</h2>
       <p>
         <a href="https://pagespeed.web.dev/" target="_blank">PageSpeed Insights</a><br>
         <a href="https://search.google.com/search-console" target="_blank">Search Console</a>
@@ -81,6 +89,34 @@
     </div>
 
   </div>
+
+<script>
+const statusEl = document.getElementById('status');
+const linkEl = document.getElementById('reportLink');
+
+fetch('latest-report.json')
+  .then(res => res.json())
+  .then(data => {
+    if (data.url && data.url !== "") {
+      linkEl.href = data.url;
+      linkEl.innerText = '🔍 Ver último relatório Lighthouse';
+
+      statusEl.innerText = '✔ Sistema ativo e atualizado';
+      statusEl.className = 'metric good';
+    } else {
+      linkEl.innerText = 'Relatório ainda não gerado';
+
+      statusEl.innerText = '⚠ Aguardando primeiro teste';
+      statusEl.className = 'metric warn';
+    }
+  })
+  .catch(() => {
+    linkEl.innerText = 'Erro ao carregar relatório';
+
+    statusEl.innerText = '❌ Erro ao conectar com dados';
+    statusEl.className = 'metric bad';
+  });
+</script>
 
 </body>
 </html>
