@@ -3,17 +3,21 @@ name: Lighthouse
 on:
   schedule:
     - cron: '0 0 * * *'
+  workflow_dispatch:
 
 jobs:
   lighthouse:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-    - name: Run Lighthouse
-      uses: treosh/lighthouse-ci-action@v10
-      with:
-        urls: |
-          https://nakamuramudancas.com.br
-        uploadArtifacts: true
+      - name: Run Lighthouse
+        uses: treosh/lighthouse-ci-action@v10
+        with:
+          urls: |
+            https://nakamuramudancas.com.br
+            https://nakamuramudancas.com.br/mudancas-campinas
+            https://nakamuramudancas.com.br/mudanca-residencial
+            https://nakamuramudancas.com.br/contato
+          uploadArtifacts: true
