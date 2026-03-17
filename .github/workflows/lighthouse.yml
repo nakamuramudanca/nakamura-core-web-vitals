@@ -31,3 +31,8 @@ jobs:
             https://nakamuramudancas.com.br/contato
           uploadArtifacts: true
           temporaryPublicStorage: true
+          configPath: './lighthouserc.json'
+            https://nakamuramudancas.com.br/mudanca-residencial
+            https://nakamuramudancas.com.br/contato
+          uploadArtifacts: true
+          temporaryPublicStorage: true
