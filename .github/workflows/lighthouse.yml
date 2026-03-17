@@ -13,13 +13,26 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 24
 
-      - name: Install Lighthouse CI
+      - name: Install LHCI
         run: npm install -g @lhci/cli
 
-      - name: Run Lighthouse CI
-        run: lhci autorun
+      - name: Run Lighthouse
+        run: |
+          lhci autorun | tee output.txt
+
+      - name: Extract report URL
+        run: |
+          URL=$(grep -o 'https://storage.googleapis.com[^ ]*' output.txt | head -n 1)
+          echo "{\"url\": \"$URL\"}" > latest-report.json
+
+      - name: Commit report link
+        run: |
+          git config --global user.name "bot"
+          git config --global user.email "bot@github.com"
+          git add latest-report.json
+          git commit -m "Atualiza relatório Lighthouse" || echo "Sem mudanças"
+          git push
