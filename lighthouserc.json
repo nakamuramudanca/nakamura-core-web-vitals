@@ -1,10 +1,20 @@
 {
   "ci": {
     "collect": {
-      "numberOfRuns": 3,
+      "numberOfRuns": 1,
       "settings": {
-        "maxWaitForLoad": 90000
-      }
+        "maxWaitForLoad": 120000,
+        "chromeFlags": "--no-sandbox"
+      },
+      "url": [
+        "https://nakamuramudancas.com.br",
+        "https://nakamuramudancas.com.br/mudancas-campinas",
+        "https://nakamuramudancas.com.br/mudanca-residencial",
+        "https://nakamuramudancas.com.br/contato"
+      ]
+    },
+    "upload": {
+      "target": "temporary-public-storage"
     }
   }
 }
